@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zdroje — Architektúra siete 5. generácie</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root {
     --bg: #faf9f7;
@@ -89,85 +88,6 @@
     color: var(--muted);
     font-style: italic;
   }
-
-  /* QR PANEL */
-  .qr-panel {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    box-shadow: var(--shadow);
-    flex-shrink: 0;
-  }
-
-  .qr-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--orange);
-  }
-
-  #qrcode canvas, #qrcode img { display: block; border-radius: 4px; }
-
-  /* URL BAR */
-  .url-bar {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 36px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-    box-shadow: var(--shadow);
-  }
-
-  .url-bar label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--orange);
-    white-space: nowrap;
-  }
-
-  .url-bar input {
-    flex: 1;
-    min-width: 180px;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
-    padding: 7px 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .url-bar input:focus { border-color: var(--orange); }
-  .url-bar input::placeholder { color: var(--muted); }
-
-  .url-bar button {
-    background: var(--orange);
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 8px 18px;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-  }
-
-  .url-bar button:hover { opacity: 0.88; transform: translateY(-1px); }
 
   /* SOURCES */
   .section-title {
@@ -269,9 +189,17 @@
     color: var(--muted);
     text-align: center;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .footer-meta {
+    display: flex;
     align-items: center;
     gap: 10px;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .dot {
@@ -280,6 +208,10 @@
     border-radius: 50%;
     display: inline-block;
     flex-shrink: 0;
+  }
+
+  .copyright {
+    font-size: 11px;
   }
 </style>
 </head>
@@ -292,28 +224,23 @@
       <h1><span class="underline-accent">Použitá literatúra</span></h1>
       <p class="subtitle">Architektúra siete 5. generácie</p>
     </div>
-    <div class="qr-panel">
-      <div class="qr-label">Naskenuj zdroje</div>
-      <div id="qrcode"></div>
-    </div>
   </header>
-
-  <div class="url-bar">
-    <label>QR → URL</label>
-    <input type="text" id="urlInput" placeholder="Vlož URL po nahratí na Netlify…" />
-    <button onclick="updateQR()">Aktualizovať QR</button>
-  </div>
 
   <p class="section-title">Referencie — 9 zdrojov</p>
 
   <div class="sources" id="sourceList"></div>
 
   <footer>
-    <span>STU Bratislava</span>
-    <span class="dot"></span>
-    <span>2026</span>
-    <span class="dot"></span>
-    <span>5G Architektúra</span>
+    <div class="footer-meta">
+      <span>STU Bratislava</span>
+      <span class="dot"></span>
+      <span>2026</span>
+      <span class="dot"></span>
+      <span>5G Architecture</span>
+      <span class="dot"></span>
+      <span>Lingonberry</span>
+    </div>
+    <div class="copyright">© Lingonberry</div>
   </footer>
 
 </div>
@@ -336,8 +263,8 @@ const sources = [
     url: "https://www.3gpp.org/ftp/Specs/archive/38_series/38.401/"
   },
   {
-    ref: "DAHLMAN, E.; PARKVALL, S.; SKÖLD, J.",
-    desc: "5G NR: The next generation wireless access technology. 2nd ed. Academic Press, 2020. ISBN 978-0-12-822320-7.",
+    ref: "DAHLMAN, Erik; PARKVALL, Stefan; SKÖLD, Johan.",
+    desc: "5G NR: The next generation wireless access technology. 2. vyd. London: Academic Press, 2020. ISBN 978-0-12-822320-7.",
     url: null
   },
   {
@@ -361,8 +288,8 @@ const sources = [
     url: "https://www.gsma.com/futurenetworks/wiki/network-slicing/"
   },
   {
-    ref: "nxgconnect.com",
-    desc: "5G gNB CU/DU/RU Split Architecture & Interfaces.",
+    ref: "5G gNB CU/DU/RU Split Architecture & Interfaces — nxgconnect.com",
+    desc: "",
     url: "https://nxgconnect.com"
   }
 ];
@@ -375,37 +302,12 @@ sources.forEach((s, i) => {
     <div class="source-badge">${i + 1}</div>
     <div>
       <div class="source-ref">${s.ref}</div>
-      <div class="source-desc">${s.desc}</div>
-      ${s.url ? `<div class="source-url"><a href="${s.url}" target="_blank">${s.url}</a></div>` : ''}
+      ${s.desc ? `<div class="source-desc">${s.desc}</div>` : ''}
+      ${s.url ? `<div class="source-url">Dostupné na: <a href="${s.url}" target="_blank">${s.url}</a></div>` : ''}
     </div>
   `;
   list.appendChild(div);
 });
-
-const defaultQRText = sources
-  .filter(s => s.url)
-  .map((s, i) => `[${i+1}] ${s.ref}\n${s.url}`)
-  .join('\n\n');
-
-function makeQR(text) {
-  const box = document.getElementById('qrcode');
-  box.innerHTML = '';
-  new QRCode(box, {
-    text: text,
-    width: 110,
-    height: 110,
-    colorDark: '#1a1a1a',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.M
-  });
-}
-
-function updateQR() {
-  const val = document.getElementById('urlInput').value.trim();
-  if (val) makeQR(val);
-}
-
-makeQR(defaultQRText);
 </script>
 </body>
 </html>
